@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "zoomrs", "zoomrs\zoomrs.csproj", "{2A51EFD0-BBF6-4E88-B26A-EE3B0C698868}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4A897E33-BCD6-4DAF-88E2-C6D5F6DA0CDD} = {4A897E33-BCD6-4DAF-88E2-C6D5F6DA0CDD}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "zoomrs.DataAccess", "zoomrs.DataAccess\zoomrs.DataAccess.csproj", "{4E6CF800-F96E-489C-80ED-9E89048AC07C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "zoomrs.Models", "zoomrs.Models\zoomrs.Models.csproj", "{4A897E33-BCD6-4DAF-88E2-C6D5F6DA0CDD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "zoomrs.Utility", "zoomrs.Utility\zoomrs.Utility.csproj", "{64AEC715-E325-4C2D-A5FE-1032694088C8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2A51EFD0-BBF6-4E88-B26A-EE3B0C698868}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A51EFD0-BBF6-4E88-B26A-EE3B0C698868}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A51EFD0-BBF6-4E88-B26A-EE3B0C698868}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A51EFD0-BBF6-4E88-B26A-EE3B0C698868}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E6CF800-F96E-489C-80ED-9E89048AC07C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E6CF800-F96E-489C-80ED-9E89048AC07C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E6CF800-F96E-489C-80ED-9E89048AC07C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E6CF800-F96E-489C-80ED-9E89048AC07C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A897E33-BCD6-4DAF-88E2-C6D5F6DA0CDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A897E33-BCD6-4DAF-88E2-C6D5F6DA0CDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A897E33-BCD6-4DAF-88E2-C6D5F6DA0CDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A897E33-BCD6-4DAF-88E2-C6D5F6DA0CDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64AEC715-E325-4C2D-A5FE-1032694088C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64AEC715-E325-4C2D-A5FE-1032694088C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64AEC715-E325-4C2D-A5FE-1032694088C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64AEC715-E325-4C2D-A5FE-1032694088C8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9C26A7D3-BE3D-41BC-B3DC-208CD4231AE6}
+	EndGlobalSection
+EndGlobal

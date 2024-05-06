@@ -1,0 +1,479 @@
+﻿@model zoomrs.Models.ViewModels.AppointmentVM
+@{
+	// IEnumerable<DisableDate> disableDate = ViewData["DisableDate"] as IEnumerable<DisableDate>;
+
+}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+	<title>SELECT222</title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
+	<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+@* 	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" /> *@
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
+
+
+	<!-- Core theme CSS (includes Bootstrap)-->
+	<link href="~/css/styles.css" rel="stylesheet" />
+	<link rel="stylesheet" href="~/vendor/libs/animate-css/animate.css">
+	<link href="~/vendor/libs/fullcalendar/fullcalendar.css" rel="stylesheet" />
+	<link href="~/vendor/libs/flatpickr/flatpickr.css" rel="stylesheet" />
+	<link href="~/vendor/libs/select2/select2.css" rel="stylesheet" />
+	<link href="~/vendor/libs/quill/editor.css" rel="stylesheet" />
+	<link href="~/vendor/libs/form-validation/umd/styles/index.min.css" rel="stylesheet" />
+	<link href="~/vendor/css/pages/app-calendar.css" rel="stylesheet" />
+
+
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+	<script src="multiselect-dropdown.js"></script>
+	<style>
+		select {
+			width: 20em;
+		}
+
+		#showTime {
+			display: none;
+			width: 100%;
+		}
+
+		#TimeSlots {
+			width: 100%;
+		}
+
+		.flatpickr-disabled {
+			color: red !important;
+		}
+
+		body {
+			font-family: 'Ubuntu', sans-serif;
+			font-weight: bold;
+		}
+
+		.select2-container {
+			min-width: 400px;
+		}
+
+		.select2-results__option {
+			padding-right: 20px;
+			vertical-align: middle;
+		}
+
+			.select2-results__option:before {
+				content: "";
+				display: inline-block;
+				position: relative;
+				height: 20px;
+				width: 20px;
+				border: 2px solid #e9e9e9;
+				border-radius: 4px;
+				background-color: #fff;
+				margin-right: 20px;
+				vertical-align: middle;
+			}
+
+			.select2-results__option[aria-selected=true]:before {
+				font-family: fontAwesome;
+				content: "\f00c";
+				color: #fff;
+				background-color: #f77750;
+				border: 0;
+				display: inline-block;
+				padding-left: 3px;
+			}
+
+		.select2-container--default .select2-results__option[aria-selected=true] {
+			background-color: #fff;
+		}
+
+		.select2-container--default .select2-results__option--highlighted[aria-selected] {
+			background-color: #eaeaeb;
+			color: #272727;
+		}
+
+		.select2-container--default .select2-selection--multiple {
+			margin-bottom: 10px;
+		}
+
+		.select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
+			border-radius: 4px;
+		}
+
+		.select2-container--default.select2-container--focus .select2-selection--multiple {
+			border-color: #f77750;
+			border-width: 2px;
+		}
+
+		.select2-container--default .select2-selection--multiple {
+			border-width: 2px;
+		}
+
+		.select2-container--open .select2-dropdown--below {
+			border-radius: 6px;
+			box-shadow: 0 0 10px rgba(0,0,0,0.5);
+		}
+
+		.select2-selection .select2-selection--multiple:after {
+			content: 'hhghgh';
+		}
+		/* select with icons badges single*/
+		.select-icon .select2-selection__placeholder .badge {
+			display: none;
+		}
+
+		.select-icon .placeholder {
+			display: none;
+		}
+
+		.select-icon .select2-results__option:before,
+		.select-icon .select2-results__option[aria-selected=true]:before {
+			display: none !important;
+			/* content: "" !important; */
+		}
+
+		.select-icon .select2-search--dropdown {
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	@* <div class="container">
+		<div class="form-group mb-3">
+
+			<label for="">Select Date</label>
+
+			<input type="text" class="form-control" id="selectedDate" name="selectedDate" required />
+
+		
+			<span id="valdate" class="text-danger"></span>
+
+
+		</div>
+		<div class="row">
+			<h4>checkbox</h4>
+			<select id="TimeSlots" class="js-select2" multiple="multiple">
+			</select>
+
+		</div>
+	</div> *@
+
+	<main class="flex-shrink-0">
+		<!-- Navigation-->
+		<nav class="navbar navbar-expand-lg bg-gradient-primary-to-secondary py-2">
+			<div class="container  d-flex justify-content-center">
+				<a class="" href=""> <img class="profile-img" src="~/assets/logomin.webp" width="220px" alt="calamba logo" /></a>
+
+
+			</div>
+		</nav>
+
+		<div class="card form-control mt-2">
+			<form method="POST" class="form-control" asp-action="Upsert" id="appointmentForm" enctype="multipart/form-data">
+				<div class="form-group">
+					<label for="floatingInput">First Name</label>
+					<input asp-for="Appointment.FirstName" type="text" class="form-control" id="fn" aria-describedby="firstname" placeholder="" required>
+					<span asp-validation-for="Appointment.FirstName" class="text-danger"></span>
+				</div>
+				<div class="form-group mt-2">
+					<label for="">Last Name</label>
+					<input asp-for="Appointment.LastName" type="text" class="form-control" id="exampleInputPassword1" placeholder="" required>
+					<span asp-validation-for="Appointment.LastName" class="text-danger"></span>
+				</div>
+
+				<div class="form-group mt-2">
+					<label for="">Sex</label>
+					<select asp-for="Appointment.Sex" class="form-select" aria-label="Sex" required>
+						@*  <option selected>Open this select menu</option> *@
+						<option disabled selected>Select Sex</option>
+						<option value="Male">Male</option>
+						<option value="Female">Female</option>
+					</select>
+					<span asp-validation-for="Appointment.Sex" class="text-danger"></span>
+				</div>
+
+				<div class="form-group mt-2">
+					<label for="">Reason</label>
+					<textarea asp-for="Appointment.reason" class="form-control" placeholder="Reason" id="floatingTextarea" required></textarea>
+					<span asp-validation-for="Appointment.reason" class="text-danger"></span>
+				</div>
+
+				<div class="form-group mt-2">
+					<label for="">Email</label>
+					<input asp-for="Appointment.Email" type="email" class="form-control" id="emaild" required>
+					<span asp-validation-for="Appointment.Email" class="text-danger"></span>
+				</div>
+
+				<div class="form-group mt-2">
+					<label for="">Phone Number</label>
+					<input asp-for="Appointment.PhoneNum" type="text" class="form-control" id="PhoneNum" required>
+					<span asp-validation-for="Appointment.PhoneNum" class="text-danger"></span>
+				</div>
+
+				<div class="form-group mb-3">
+					<label for="">Department</label>
+					<select asp-for="Appointment.DepartmentId" asp-items="@Model.DepartmentList" class="form-select" required>
+						<option disabled selected>Select Department</option>
+					</select>
+					<span asp-validation-for="Appointment.DepartmentId" class="text-danger"></span>
+					@*         <span asp-validation-for="Appointment.DepartmentId" class="text-danger"></span> *@
+				</div>
+
+				<div class="form-group mb-3">
+
+					<label for="">Select Date</label>
+					<input type="text" class="form-control" id="selectedDate" name="selectedDate" required />
+					<span id="valdate" class="text-danger"></span>
+				</div>
+
+
+				<div class="form-group mb-3" id="showTime">
+					<label for="">Select Time(s)</label><br />
+					<input type="hidden" id="selectedTimeSlots" name="SelectedTimeSlots" />
+					<select required id="TimeSlots" class="js-select2 form-group" multiple onchange="console.log(Array.from(this.selectedOptions).map(x=>x.value??x.text))" multiselect-hide-x="true"></select>
+					<span id="valtime" class="text-danger"></span>
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
+
+
+
+
+
+
+
+
+
+		<!-- About Section-->
+		<section class="bg-light py-5">
+			<div class="container px-5">
+				<div class="row gx-5 justify-content-center">
+					<div class="col-xxl-8">
+						<div class="text-center my-5">
+							<h2 class="display-5 fw-bolder"><span class="text-gradient d-inline">About Zoomers</span></h2>
+							<p class="lead fw-light mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit dolo</p>
+							<p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit dolorum itaque qui unde quisquam consequatur autem. Eveniet quasi nobis aliquid cumque officiis sed rem iure ipsa! Praesentium ratione atque dolorem?</p>
+							<!-- <div class="d-flex justify-content-center fs-2 gap-4">
+								<a class="text-gradient" href="#!"><i class="bi bi-twitter"></i></a>
+								<a class="text-gradient" href="#!"><i class="bi bi-linkedin"></i></a>
+								<a class="text-gradient" href="#!"><i class="bi bi-github"></i></a>
+							</div> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+	<!-- Footer-->
+	<footer class="bg-white py-4 mt-auto">
+		<div class="container px-5">
+			<div class="row align-items-center justify-content-between flex-column flex-sm-row">
+				<div class="col-auto"><div class="small m-0">Copyright &copy;Zoomers 2024</div></div>
+				<div class="col-auto">
+					<!-- <a class="small" href="#!">Privacy</a>
+					<span class="mx-1">&middot;</span>
+					<a class="small" href="#!">Terms</a>
+					<span class="mx-1">&middot;</span>
+					<a class="small" href="#!">Contact</a> -->
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	@{
+		// Get the list of disabled dates from ViewData
+		var disabledDates = ViewData["DisableDate"] as List<string>;
+		// Serialize the list of disabled dates to JSON
+		var disabledDatesJson = Newtonsoft.Json.JsonConvert.SerializeObject(disabledDates);
+	}
+	<script>
+		$(document).ready(function () {
+			var disableDate = @Html.Raw(Json.Serialize(ViewData["DisableDate"]));
+
+			var disabledDates = @Html.Raw(disabledDatesJson);
+
+			disableDate = disableDate.map(function (dateString) {
+				var utcDate = new Date(dateString + "T00:00:00Z"); // Assume dates are in UTC
+				var localDate = new Date(utcDate.getTime() + utcDate.getTimezoneOffset() * 60000); // Convert to local timezone
+				return localDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+			});
+
+			flatpickr("#selectedDate", {
+				dateFormat: "Y-m-d",
+				minDate: "today",
+				locale: "fil", // Set the locale to Filipino
+				time_24hr: true,
+				disable: [
+					disabledDates, // Pass disableDate array as the first element
+					function (date) {
+						// Disable weekends (Saturday and Sunday)
+						if (date.getDay() === 0 || date.getDay() === 6) {
+							return true;
+						}
+						var isoDate = date.toISOString().split('T')[0];
+						return disableDate.includes(isoDate);
+					}
+
+				]
+
+			});
+		});
+
+
+	</script>
+	<script>
+
+		$(document).ready(function () {
+			$('#appointmentForm').submit(function (event) {
+				event.preventDefault();
+
+				// Get selected time slots
+				var selectedTimeSlots = $('#TimeSlots').val();
+				console.log($('#TimeSlots').val().length);
+
+				$('#selectedTimeSlots').val(selectedTimeSlots.join(','));
+
+				var selectedDate = $('#selectedDate').val();
+				console.log($('#selectedDate').val());
+
+
+				if (!selectedDate) {
+					$('#valdate').text('Please select a date.');
+
+					return false; // prevent form submission
+				}
+
+
+				if ($('#TimeSlots').val().length == 0) {
+
+					$('#valtime').text('Please select at least one time slot.');
+					return false; // prevent form submission
+				}
+				else {
+					$('#valtime').text('');
+				}
+				// Set the selected time slots to the hidden input field
+
+				// Check for empty time slots
+
+
+				// Check for empty textboxes
+				var isTextBoxEmpty = false;
+				$('input[type="text"]').each(function () {
+					if ($(this).val().trim() === '') {
+						isTextBoxEmpty = true;
+						return false; // exit the loop early if an empty textbox is found
+					}
+				});
+
+				if (isTextBoxEmpty) {
+
+					return false; // prevent form submission
+				}
+
+				// Check for empty date
+
+
+				// Proceed with form submission if all validations pass
+				this.submit()
+
+			});
+		});
+	</script>
+
+	<script>
+		$(document).ready(function () {
+			$("#selectedDate").change(function () {
+				var selectedDate = $(this).val();
+				console.log(selectedDate);
+				$('#showTime').css('display', 'block');
+				$('.multiselect-dropdown').css('width', '100%');
+				$.ajax({
+					url: '@Url.Action("GetAvailableTimeSlots", "Appointment")',
+					type: 'GET',
+					dataType: 'json',
+					data: { selectedDate: selectedDate },
+					success: function (availableTimeSlots) {
+						// Clear previous options
+						$('#TimeSlots').empty();
+						console.log(availableTimeSlots);
+						// Populate options with available time slots
+						for (var i = 0; i < availableTimeSlots.length; i++) {
+							var item = availableTimeSlots[i];
+
+							// Check if item.text is defined and not empty
+							if (item && typeof item.text === 'string' && item.text.trim() !== '') {
+								console.log(item.text); // Log the text of each available time slot
+
+								// Create a new <option> element
+								var option = $('<option>', {
+									value: item.value,
+									text: item.text
+								});
+
+								// Check if the option should be disabled
+								if (item.disabled) {
+									option.prop('disabled', true);
+								}
+
+								// Append the option to the <select> element with id #TimeSlots
+								$('#TimeSlots').append(option);
+							} else {
+								console.log("Text is undefined or empty for item: ", item);
+							}
+						}
+					},
+					error: function (xhr, status, error) {
+						console.log("Error fetching time slots: " + error);
+					}
+				});
+			});
+
+		});
+
+
+
+
+	</script>
+	<script>
+
+		$(".js-select2").select2({
+			closeOnSelect: false,
+			placeholder: "Placeholder",
+			allowHtml: true,
+			allowClear: true,
+			tags: true // создает новые опции на лету
+		});
+
+		$('.icons_select2').select2({
+			width: "100%",
+			templateSelection: iformat,
+			templateResult: iformat,
+			allowHtml: true,
+			placeholder: "Placeholder",
+			dropdownParent: $('.select-icon'),//обавили класс
+			allowClear: true,
+			multiple: false
+		});
+
+
+		function iformat(icon, badge,) {
+			var originalOption = icon.element;
+			var originalOptionBadge = $(originalOption).data('badge');
+
+			return $('<span><i class="fa ' + $(originalOption).data('icon') + '"></i> ' + icon.text + '<span class="badge">' + originalOptionBadge + '</span></span>');
+		}
+
+	</script>
+	@section Scripts
+		{
+		<partial name="_validationScriptsPartial" />
+	}
+</body>
+</html>
