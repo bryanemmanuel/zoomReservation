@@ -28,7 +28,7 @@
 	<link href="~/vendor/css/pages/app-calendar.css" rel="stylesheet" />
 
 
-	</head>
+</head>
 <body>
 	<main class="flex-shrink-0">
 		<!-- Navigation-->
@@ -40,27 +40,90 @@
 			</div>
 		</nav>
 
-		<div class="card form-control mt-2">
-				<h1>Cancel Appointment</h1>
-			<form method="Post" class="form-control" asp-action="Cancelling">
+		@* <div class="card form-control mt-2">
+			<h1></h1>
+			<form >
 
 				<!-- Display appointment details -->
-				<h5>Name: @Model.Appointment.FirstName  @Model.Appointment.LastName</h5>
-				<h5>Department: @Model.Appointment.Department.DepartmentName</h5>
-			
+				<h5>Name: </h5>
+				<h5>Department: </h5>
+
 				<h5>Schedule of Appointment</h5>
-				<ul>
+
 				
-					@foreach (var item in Model.ScheduleData)
-					{
-						<li>
-							<strong>Date:</strong> @item.date.ToString("MMMM dd, yyyy") ( @item.date.ToString("dddd") )<br />
-							<strong>Time:</strong>
-							@{
+
+				<label for="reason">Reason for Cancel</label>
+				<br />
+				
+
+			</form>
+
+
+
+
+		</div>
+ *@
+
+		<div class="card">
+			
+			<div class="card-body">
+				<div class="d-flex align-items-center justify-content-center ">
+					<form method="Post" asp-action="Cancelling"  class="w-px-800 border rounded p-3 p-md-5">
+						<h3 class="mb-4">Cancel Appointment</h3>
+
+						<div class="row mb-3">
+							<div class="col-12">
+								<label class="col-sm-3 col-form-label" for="Department">Name:</label>
+								<div class="col-12">
+									<input type="text" id="form-alignment-username" class="form-control" value="@Model.Appointment.FirstName  @Model.Appointment.LastName" disabled />
+								</div>
+							</div>
+
+						</div>
+
+
+						<div class="row mb-3">
+							<div class="col-12">
+								<label class="col-sm-3 col-form-label" for="Department">Department</label>
+								<div class="col-12">
+									<input type="text" id="form-alignment-username" class="form-control" value="@Model.Appointment.Department.DepartmentName" disabled />
+								</div>
+							</div>
+
+						</div>
+
+						<div class="divider">
+							<div class="divider-text">
+								<h6>
+
+									Reserved Date
+								</h6>
+							</div>
+						</div>
+
+
+
+
+
+
+					
+
+							@foreach (var item in Model.ScheduleData)
+							{
+
+								<div class="col-12">
+									<label class="col-sm-3 col-form-label" for="dandt">Date </label>
+									<div class="col-12">
+										<input type="text"  class="form-control " value="@item.date.ToString("MMMM dd, yyyy") ( @item.date.ToString("dddd") )" disabled />
+									</div>
+								</div>
+
+
+							<label class="col-sm-3 col-form-label" for="dandt">Time</label>
 								// Assuming val represents the maximum time value
 								int val = item.time;
 								int count = item.count;
-						
+
 								<input class="form-control" type="hidden" value="@item.Id" name="schedID" />
 								int count2 = 0;
 								List<string> getTimes = new List<string>(); // Using List<string> instead of string[]
@@ -104,27 +167,87 @@
 										count2++;
 									}
 								}
-							}
-							@for (int i = getTimes.Count - 1; i >= 0; i--)
-							{
-							<li>@getTimes[i]</li>
-							}
-						</li>
-					}
-				</ul>
-				<input class="form-control"  type="hidden" value="@Model.Appointment.Id" name="appId" />
-				
-				<label for="reason">Reason for Cancel</label>
-				<textarea  class="form-control" asp-for="Appointment.Cancelled" id="reason" value="" required>
 
-				</textarea><br />
-				<button type="submit" class="btn btn-danger">Cancel Appointment</button>
+							<div class="row">
+								@for (int i = getTimes.Count - 1; i >= 0; i--)
+								{
 
-			</form>
+
+
+									<div class="col-3 badge bg-label-success pt-2 pb-2  mx-2">@getTimes[i]</div>
+								
+									
+
+								
+
+									
+								}
+								</div>
+							}
+
+
+						<input class="form-control" type="hidden" value="@Model.Appointment.Id" name="appId" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+						<div class="divider">
+							<div class="divider-text">
+								<h6>
+
+									Reason for Cancel
+								</h6>
+							</div>
+						</div>
+
+
+						<textarea class="form-control" asp-for="Appointment.Cancelled" id="reason" value="" required></textarea>
+
+						<div class="row mb-3">
+							<div class="col-6">
+								<label class="col-sm-3 col-form-label" for="Department">Department</label>
+								<div class="col-12">
+									<input type="text" id="form-alignment-username" class="form-control" placeholder="john.doe" />
+								</div>
+							</div>
+							<div class="col-6">
+								<label class="col-sm-3 col-form-label" for="Department">Department</label>
+								<div class="col-12">
+									<input type="text" id="form-alignment-username" class="form-control" placeholder="john.doe" />
+								</div>
+							</div>
+						</div>
+
+
+						<div class="row mb-3">
+							<label class="col-sm-3 col-form-label" for="form-alignment-username">Username</label>
+							<div class="col-sm-9">
+								<input type="text" id="form-alignment-username" class="form-control" placeholder="john.doe" />
+							</div>
+						</div>
+
+
+
+						<div class="d-grid">
+						
+							<button type="submit" class="btn btn-danger">Cancel Appointment</button>
+						</div>
+					</form>
+
+
+				</div>
+			</div>
 		</div>
-
-
-
 
 
 

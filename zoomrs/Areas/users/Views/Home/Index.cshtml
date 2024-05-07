@@ -374,24 +374,88 @@
 						$("#id").val(details.id);
 						var modalBody = $('#appointmentModal').find('.modal-body');
 						modalBody.html(
-							'<p><strong>Name:</strong> ' + details.firstName + ' ' + details.lastName + '</p>' +
-							'<p><strong>Sex:</strong> ' + details.sex + '</p>' +
-							'<p><strong>Reason:</strong> ' + details.reason + '</p>' +
-							'<p><strong>Email:</strong> ' + details.email + '</p>' +
-							'<p><strong>Phone:</strong> ' + details.phoneNum + '</p>' +
+
+
+							'<div class="row mb-3" > ' +
+							   '<div class=" col-lg-4 col-sm-12 ">' +
+
+							'<label class="col-lg-4 col-sm-12 col-form-label" for="First Name">First Name</label>' +
+										'<div class="col-12">' +
+											'<input type="text"  class="form-control" value= ' + details.firstName + ' ' + ' disabled />' +
+										'</div>' +
+								'</div>' +
+
+							'<div class="col-lg-4 col-sm-12">' +
+									'<label class="col-sm-3 col-form-label" for="LastName">Last Name</label>' +
+										'<div class="col-12">' +
+											'<input type="text"  class="form-control" value= ' + details.lastName + ' ' + ' disabled />' +
+										'</div>' +
+							    '</div>' +
+
+
+						
+
+
+
+						
+
+
+
+							'<div class="col-lg-4 col-sm-12">' +
+							'<label class="col-sm-5 col-form-label" for="Transaction ID:">Transaction ID:</label>' +
+							'<div class="col-12">' +
+							'<input type="text"  class="form-control" value= ' + details.transactionId + ' ' + ' disabled />' +
+							'</div>' +
+							'</div>' +
+
+
+							'<div class="col-lg-4 col-sm-12">' +
+							'<label class="col-sm-5 col-form-label" for="Date ID:">Date</label>' +
+							'<div class="col-12">' +
+							'<input type="text"  class="form-control" value= ' + details.date + ' ' + ' disabled />' +
+							'</div>' +
+							'</div>' +
+
+
+
+							'<div class="col-lg-4 col-sm-12">' +
+							'<label class="col-sm-5 col-form-label" for="Date ID:">Date</label>' +
+							'<div class="col-12">' +
+							'<input type="text"  class="form-control" value= ' + details.date + ' ' + ' disabled />' +
+							'</div>' +
+							'</div>' +
+
+
+
+
+
+
+							'</div>' +
+
+
+
+
+
+							
+							
+
+
+					
 							'<p><strong>Department:</strong> ' + details.departmentName + ' (' + details.departmentAbbreviation + ')</p>' +
-							'<p><strong>Cancelled:</strong> ' + details.cancelled + '</p>' +
-							'<p><strong>Availability:</strong> ' + details.availability + '</p>' +
-							'<p><strong>Date:</strong> ' + details.date + '</p>' +
-							'<p><strong>Time:</strong> ' + details.time + '</p>' +
-							'<p><strong>Transaction ID:</strong> ' + details.transactionId + '</p>' +
+							
+							
+							
+						
+							
+							
 							'<p><strong>Time:</strong> </p>'
 
 						);
+						'<div class="row d-flex justify-content-center align-items-center">'
 						for (var a = getTimes.length - 1; a >= 0; a--) {
-							modalBody.append('<p><strong> ' + getTimes[a] + '</strong></p>');
+							modalBody.append('<div class="col-3 badge bg-label-success mt-2 mb-2  mx-1" > ' + getTimes[a] + '</div>');
 						}
-
+						'<div>'
 
 
 
