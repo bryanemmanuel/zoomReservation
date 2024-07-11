@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Areas\users\Controllers\page.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AngleSharp" Version="1.1.0" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.57" />
     <PackageReference Include="MailKit" Version="4.4.0" />
@@ -31,6 +35,18 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Data\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\users\Controllers\page.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Areas\users\Controllers\page.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Areas\users\Controllers\page.cshtml" />
   </ItemGroup>
 
 </Project>

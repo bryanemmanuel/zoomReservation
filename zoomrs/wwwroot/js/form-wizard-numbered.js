@@ -43,7 +43,7 @@ $(function () {
 
                     Swal.fire({
                         title: "Reservation Sent",
-                        text: "Please Check Your E",
+                        text: "Please Check Your Email",
                         icon: "success",
                         customClass: {
                             confirmButton: "btn btn-primary"

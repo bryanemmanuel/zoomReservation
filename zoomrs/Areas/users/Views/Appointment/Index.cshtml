@@ -18,7 +18,7 @@
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
-	<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 	<link href="~/vendor/libs/bootstrap-select/bootstrap-select.css" rel="stylesheet" />
 
 	<link href="~/vendor/libs/sweetalert2/sweetalert2.css" rel="stylesheet" />
@@ -40,8 +40,12 @@
 	<link href="~/vendor/css/pages/app-calendar.css" rel="stylesheet" />
 
 
+@* 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11"> *@
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-	<script src="multiselect-dropdown.js"></script>
+@* 	<script src="multiselect-dropdown.js"></script> *@
 	<style>
 		select {
 			width: 20em;
@@ -63,6 +67,17 @@
 		body {
 			font-family: 'Ubuntu', sans-serif;
 			font-weight: bold;
+		}
+
+		ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		li {
+			display: inline-block;
+			margin-right: 10px;
 		}
 
 	/* 	.select2-container {
@@ -387,7 +402,7 @@
 													<i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
 													<span class="align-middle d-sm-inline-block d-none">Previous</span>
 												</button>
-												<button type="submit" class="btn btn-primary btn-submit">Submit</button>
+												<button id="submitBtn" type="submit" class="btn btn-primary ">Submit</button>
 												
 											</div>
 										</div>
@@ -483,20 +498,7 @@
 	
 	</main>
 	<!-- Footer-->
-	<footer class="bg-white py-4 mt-auto">
-		<div class="container px-5">
-			<div class="row align-items-center justify-content-between flex-column flex-sm-row">
-				<div class="col-auto"><div class="small m-0">Copyright &copy;Zoomers 2024</div></div>
-				<div class="col-auto">
-					<!-- <a class="small" href="#!">Privacy</a>
-					<span class="mx-1">&middot;</span>
-					<a class="small" href="#!">Terms</a>
-					<span class="mx-1">&middot;</span>
-					<a class="small" href="#!">Contact</a> -->
-				</div>
-			</div>
-		</div>
-	</footer>
+
 
 	@{
 		// Get the list of disabled dates from ViewData
@@ -504,6 +506,10 @@
 		// Serialize the list of disabled dates to JSON
 		var disabledDatesJson = Newtonsoft.Json.JsonConvert.SerializeObject(disabledDates);
 	}
+
+
+
+
 	<script>
 		$(document).ready(function () {
 			var disableDate = @Html.Raw(Json.Serialize(ViewData["DisableDate"]));
@@ -584,20 +590,142 @@
 					}
 				});
 
-				if (isTextBoxEmpty) {
 
-					return false; // prevent form submission
-				}
+
+				// function checkCondition() {
+					if (isTextBoxEmpty) {
+
+						return false; // prevent form submission
+					} 
+					
+					
+				// 	else {
+				// 		return true;
+				// 	}
+				// }
+
+
+
+				// document.getElementById('submitBtn').addEventListener('click', function () {
+				// 	// Check the condition
+				// 	if (checkCondition()) {
+				// 		// Disable the button if the condition is true
+				// 		this.disabled = true;
+				// 		// Optionally, you can change the text to show it's disabled
+				// 		this.innerText = 'Submitting...';
+				// 	}
+				// });
+
+
+				
+
+
 
 				// Check for empty date
 
 
 				// Proceed with form submission if all validations pass
-				this.submit()
+				
+
+				
+				
+
+
+				var form = $(this);
+				$.ajax({
+					url: form.attr('action'),
+					type: form.attr('method'),
+					data: form.serialize(),
+					beforeSend: function () {
+						
+						$('#submitBtn').attr('disabled', 'disabled').text('Submitting');
+					},
+					success: function (response) {
+						if (response.success) {
+							var timesList = '';
+							$.each(response.times, function (index, time) {
+								timesList += '<li class="badge bg-label-success mb-2">' + time + '</li>';
+							});
+							// Assuming the response from the server indicates a successful submission
+							Swal.fire({
+								icon: 'success',
+								
+								html: `
+			<div class="p-3">
+			  <div class="text-center mb-2">
+
+				<h3>Appointment Details</h3>
+				
+			  </div>
+			  <div class="modal-body">
+				<div class="row mb-3">
+				 
+				 <div class="col-lg-12 col-sm-12 ">
+					<label class="col-lg-4 col-sm-12 col-form-label d-flex justify-content-start" for="First Name">Full Name</label>
+							<div class="col-12"><input type="text" class="form-control" value="` + response.firstname + ` ` + response.lastname + `" disabled=""></div>
+				  </div>
+
+
+
+				  <div class="col-lg-12 col-sm-12">
+							<label class="col-sm-5 col-form-label  d-flex justify-content-start" for="Transaction ID:">Transaction ID:</label>
+							<div class="col-12"><input type="text" class="form-control" value="` + response.tCode + `" disabled=""></div>
+				  </div>
+				</div>
+			
+						<p><strong>Times Reserved:</strong></p>
+
+								<ul>` + timesList + `</ul>
+						
+			  </div>
+			</div>
+		
+		
+		
+		  `,
+								confirmButtonText: 'OK'
+							}).then((result) => {
+								if (result.isConfirmed || result.isDismissed) {
+									window.location.href = response.redirectUrl; // Redirect or perform any other action
+								} else {
+									Swal.fire({
+										icon: 'error',
+										title: 'Error!',
+										text: 'Something went wrong. Please try again.',
+										confirmButtonText: 'OK'
+									});
+								}
+							});
+						}
+					},
+					error: function (xhr, status, error) {
+						
+						Swal.fire({
+							icon: 'error',
+							title: 'Error!',
+							text: 'Something went wrong. Please try again.',
+							confirmButtonText: 'OK'
+						});
+					},
+					complete: function () {
+						
+						$('#submitBtn').removeAttr('disabled').text('Submit');
+					}
+
+				});
+
+
+
+
+
+
+
 
 			});
 		});
 	</script>
+
+	
 
 	<script>
 		$(document).ready(function () {
@@ -645,6 +773,22 @@
 						console.log("Error fetching time slots: " + error);
 					}
 				});
+
+
+
+
+
+				
+
+
+
+
+
+
+
+
+
+
 			});
 
 		});
@@ -653,6 +797,8 @@
 
 
 	</script>
+
+
 	<script>
 
 		$(".js-select2").select2({
@@ -684,8 +830,13 @@
 
 	</script>
 
+
+
+
+
+	
 	<script src="~/vendor/libs/sweetalert2/sweetalert2.js"></script>
-	<script src="~/js/extended-ui-sweetalert2.js"></script>
+ 	<script src="~/js/extended-ui-sweetalert2.js"></script>
 	<script src="~/vendor/libs/jquery/jquery.js"></script>
 	<script src="~/vendor/libs/popper/popper.js"></script>
 	<script src="~/vendor/js/bootstrap.js"></script>
@@ -707,9 +858,9 @@
 	<script src="~/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
 	<script src="~/vendor/libs/select2/select2.js"></script>
 
-	<script src="~/js/main.js"></script>
-	<script src="~/js/form-wizard-numbered.js"></script>
+	@* <script src="~/js/main.js"></script> *@
 
+	<script src="~/js/form-wizard-numbered.js"></script>
 	<script src="~/js/form-wizard-validation.js"></script>
 	@section Scripts
 		{

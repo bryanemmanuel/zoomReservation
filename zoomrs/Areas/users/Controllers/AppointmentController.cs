@@ -151,6 +151,7 @@ namespace zoomrs.Areas.users.Controllers
 
 
 			return RedirectToAction("Index", "Home");
+			
 		}
 
 	    [HttpPost]
@@ -163,6 +164,7 @@ namespace zoomrs.Areas.users.Controllers
             int[] forSchedule = null;
             int count2 = 0;
             int count3 = 0;
+
             string[] selectedTimeSlotsArray = selectedTimeSlots.Split(',');
 
             if (selectedTimeSlotsArray != null)
@@ -222,12 +224,16 @@ namespace zoomrs.Areas.users.Controllers
             var countcheck = count2;
             var checker = forAppointment;
             var checker2 = forSchedule;
+			var Fname = obj.Appointment.FirstName;
+
+			string code = departmentName + "_" + selectedDate + "_" + count2.ToString();
+
+			var fName = obj.Appointment.FirstName;
+			var lName = obj.Appointment.LastName;
 
 
-            string code = departmentName + "_" + selectedDate + "_" + count2.ToString();
-
-            // Create and add the appointment to the database
-            var appointment = new Appointment
+			// Create and add the appointment to the database
+			var appointment = new Appointment
             {
                 // Populate appointment properties from AppointmentVM obj
                 FirstName = obj.Appointment.FirstName,
@@ -241,8 +247,12 @@ namespace zoomrs.Areas.users.Controllers
 
             };
 
-            // Add the appointment to the unit of work
-            _unitOfWork.Appointment.Add(appointment);
+
+			
+
+
+			// Add the appointment to the unit of work
+			_unitOfWork.Appointment.Add(appointment);
 
             // Save changes to the database to generate the appointment ID
             _unitOfWork.Save();
@@ -282,64 +292,126 @@ namespace zoomrs.Areas.users.Controllers
 
             BodyBuilder bodyBuilder = new BodyBuilder();
 
-            StringBuilder sb = new StringBuilder();
-			sb.Append("<h4>Transaction Id: " + code + "</h4> ");
-			sb.Append("<div style = 'color:red; '> This is the appointment confirmation email body.</div> ");
-			sb.Append("<h6>Name: "+ obj.Appointment.FirstName+ " " + obj.Appointment.LastName + "</h6> ");
-			sb.Append("<h6>Date: " + schedule.date +"</h6> ");
-			sb.Append("<h6>Time: </h6> ");
-			//--------- item.time
+			StringBuilder sb = new StringBuilder();
+			sb.Append(@"
+<html>
+<head>
+</head>
+<body style='font-family: Arial, sans-serif; color: #333; margin: 0; padding: 0; background-color: #f4f4f4;'>
+  <div style='max-width: 800px; margin: 20px auto; padding: 20px; background-color: #fff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); border-radius: 8px;'>
+    <div style='padding: 20px;'>
+      <div style='border: 1px solid #ddd; padding: 20px;'>
+        <div style='display: flex; justify-content: space-between; align-items: center; padding: 20px; background-color: #0073e6; color: #fff; border-radius: 8px; flex-wrap: wrap; text-align: center;'>
+          <div style='flex: 1 1 100%; margin-bottom: 10px;'>
+            <img src='https://test.calambacity.gov.ph/maincss/assets/img/logomin.webp' width='240' alt='Logo' style='max-width: 100%; height: auto;'>
+          </div>
+          <div style='flex: 1 1 100%; padding: 0 0 0 15px; color: #fff;'>
+            City Government of Calamba <br>
+            New City Hall Complex,<br> Bacnotan Road, Brgy. Real, <br>City of Calamba, Laguna, 4027<br>
+            Phone: (049) 545-6789 <br>
+            Email: info@calambacity.gov.ph
+          </div>
+        </div>
+        <div style='padding: 20px; background-color: #f9f9f9; margin-top: 20px; border-radius: 8px; display: flex; justify-content: space-between; flex-wrap: wrap;'>
+          <div style='flex: 1 1 100%;'>
+            <p style='margin-bottom: 2px;'><b style='color: #0073e6;'>Appointment Confirmation:</b></p>
+            <p style='margin-bottom: 0;'>
+              " + obj.Appointment.FirstName + " " + obj.Appointment.LastName + @"<br>
+              " + department.DepartmentName + @" <br>
+              " + obj.Appointment.Email + @" <br>
+              " + obj.Appointment.PhoneNum + @"
+            </p>
+          </div>
+          <div style='flex: 1 1 100%; text-align: right;'>
+            <p style='margin: 0;'>Transaction No: <b style='color: #0073e6;'>" + code + @"</b></p>
+            <p style='margin: 0;'>Date: <b style='color: #0073e6;'>" + schedule.date.ToString("dddd, MMMM dd, yyyy") + @"</b></p>
+          </div>
+        </div>
+        <div style='padding: 20px;'>
+          <div style='margin-bottom: 30px;'>
+            <div style='border: 1px solid #ddd; border-radius: 8px; overflow: hidden;'>
+              <table style='width: 100%; border-collapse: collapse; background-color: #f9f9f9;'>
+                <thead>
+                  <tr>
+                    <th style='padding: 10px; border: 1px solid #ddd; text-align: left; background-color: #0073e6; color: #fff;'>Reserved Time</th>
+                  </tr>
+                </thead>
+                <tbody>");
+
 			int val = schedule.time;
 			int countt = schedule.count;
-            int countt2 = 0;
-		   List<string> getTimes = new List<string>(); // Using List<string> instead of string[]
+			int countt2 = 0;
+			List<string> getTimes = new List<string>();
 
-					for (int i = 256; i >= 1; i = i / 2)
-					{
-						if (i<val && countt2<countt)
-						{
-							switch (i)
-							{
-								case 1:
-									getTimes.Add("8:00AM-9:00AM");
-									break;
-								case 2:
-									getTimes.Add("9:00AM-10:00AM");
-									break;
-								case 4:
-									getTimes.Add("10:00AM-11:00AM");
-									break;
-								case 8:
-									getTimes.Add("11:00AM-12:00PM");
-									break;
-								case 16:
-									getTimes.Add("12:00PM-1:00PM");
-									break;
-								case 32:
-									getTimes.Add("1:00PM-2:00PM");
-									break;
-								case 64:
-									getTimes.Add("2:00PM-3:00PM");
-									break;
-								case 128:
-									getTimes.Add("3:00PM-4:00PM");
-									break;
-								case 256:
-									getTimes.Add("4:00PM-5:00PM");
-									break;
-								default:
-									break;
-							}
-                            countt2++;
-						}
-
-				
-			        }
-			//-------
-			for (int a = getTimes.Count - 1; a >= 0; a--)
+			for (int i = 256; i >= 1; i = i / 2)
 			{
-				sb.Append("<h6>" + getTimes[a] + " </h6> ");
+				if (i <= val && countt2 < countt)
+				{
+					switch (i)
+					{
+						case 1:
+							getTimes.Add("8:00AM-9:00AM");
+							break;
+						case 2:
+							getTimes.Add("9:00AM-10:00AM");
+							break;
+						case 4:
+							getTimes.Add("10:00AM-11:00AM");
+							break;
+						case 8:
+							getTimes.Add("11:00AM-12:00PM");
+							break;
+						case 16:
+							getTimes.Add("12:00PM-1:00PM");
+							break;
+						case 32:
+							getTimes.Add("1:00PM-2:00PM");
+							break;
+						case 64:
+							getTimes.Add("2:00PM-3:00PM");
+							break;
+						case 128:
+							getTimes.Add("3:00PM-4:00PM");
+							break;
+						case 256:
+							getTimes.Add("4:00PM-5:00PM");
+							break;
+						default:
+							break;
+					}
+					countt2++;
+				}
 			}
+
+			for (var j = getTimes.Count - 1; j >= 0; j--)
+			{
+				sb.Append("<tr><td style='padding: 10px; border: 1px solid #ddd; text-align: left;'>" + getTimes[j] + "</td></tr>");
+			}
+
+			sb.Append(@"
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div style='padding: 20px; background-color: #f9f9f9; border-radius: 8px;'>
+            <p style='margin: 0; font-size: 18px; color: #0073e6; margin-bottom: 5px;'>Thank you</p>
+            <p style='color: #0073e6; font-size: 12px; margin: 0; font-weight: bold;'>Terms & Conditions</p>
+            <p style='margin: 0; font-size: 12px;'>By reserving and participating in a Zoom session, you agree to comply with Zoom's terms of service and privacy policy. Any misuse of the platform may result in the termination of your session and future reservations.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>");
+
+
+
+
+
+
+
+
 
 			sb.Append("<span style='opacity: 0;'>" + DateTime.Now + "</span>");
             bodyBuilder.HtmlBody = sb.ToString();
@@ -349,7 +421,7 @@ namespace zoomrs.Areas.users.Controllers
 
             using (SmtpClient client = new SmtpClient())
             {
-                client.Connect("mail.calambacity.gov.ph", 587, SecureSocketOptions.None);
+                client.Connect("mail.calambacity.gov.ph", 587, SecureSocketOptions.StartTls);
                 client.Authenticate("no-reply@calambacity.gov.ph", "NOREPpassword101$");
 
                 // Send the email
@@ -357,7 +429,12 @@ namespace zoomrs.Areas.users.Controllers
                 client.Disconnect(true);
             }
 
-			return RedirectToAction("Index", "Home");
+
+
+			//TempData["SuccessMessage"] = "Appointment successfully booked!";
+			//return RedirectToAction("Index", "Home");
+			return Json(new { success = true, redirectUrl = Url.Action("Index", "Home"), tCode = code, firstname = fName, lastname = lName, times = getTimes.ToArray() });
+
 		}
 
         public ActionResult GetAvailableTimeSlots(DateOnly selectedDate)
