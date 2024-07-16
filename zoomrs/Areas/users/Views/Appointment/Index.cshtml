@@ -45,6 +45,14 @@
 
 
 	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+	<script>
+		function enableSubmitBtn() { 
+			document.getElementById("submitBtn").disabled = false;
+		}
+	</script>
+
+
 @* 	<script src="multiselect-dropdown.js"></script> *@
 	<style>
 		select {
@@ -62,6 +70,9 @@
 
 		.flatpickr-disabled {
 			color: red !important;
+		
+			
+		
 		}
 
 		body {
@@ -174,14 +185,24 @@
 		.select-icon .select2-search--dropdown {
 			display: none;
 		}
+
+		.min-vh-90 {
+			min-height: 90vh;
+		}
 	</style>
 </head>
 <body>
-	<main class="flex-shrink-0">
+
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+	
+	<main class="flex-shrink-0 calambabg ">
 		<!-- Navigation-->
-		<nav class="navbar navbar-expand-lg bg-gradient-primary-to-secondary py-2">
+		
+
+		<nav class="navbar navbar-expand-lg bg-gradient-primary-to-secondary ">
 			<div class="container  d-flex justify-content-center">
-				<a class="" href=""> <img class="profile-img" src="~/assets/logomin.webp" width="220px" alt="calamba logo" /></a>
+				<a asp-area="Users" asp-controller="Home" asp-action="Index"> <img class="profile-img" src="~/assets/logomin.webp" width="220" alt="calamba logo" /></a>
 			</div>
 		</nav>
 
@@ -192,15 +213,11 @@
 
 
 
+		<div class="container-fluid  d-flex justify-content-center align-items-center min-vh-90">
 
-
-
-
-
-
-		<div class="card form-control mt-2">
+		<div class="card form-control ">
 			<form method="POST" class="form-control" asp-action="Upsert" id="appointmentForm" enctype="multipart/form-data">
-
+			
 
 				<!-- Default -->
 				<div class="row">
@@ -211,36 +228,40 @@
 						<div class="bs-stepper wizard-numbered mt-2">
 							<div class="bs-stepper-header">
 								<div class="step" data-target="#personal-info">
-									<button type="button" class="step-trigger">
+
+									<button type="button" class="step-trigger" disabled >
 										<span class="bs-stepper-circle">1</span>
 										<span class="bs-stepper-label mt-1">
 											<span class="bs-stepper-title">Personal Information</span>
 											<span class="bs-stepper-subtitle">Setup Account Details</span>
 										</span>
 									</button>
+
 								</div>
 								<div class="line">
 									<i class="bx bx-chevron-right"></i>
 								</div>
-								<div class="step" data-target="#reason">
-									<button type="button" class="step-trigger">
+								<div class="step" data-target="#reason" >
+
+										<button type="button" class="step-trigger" disabled>
 										<span class="bs-stepper-circle">2</span>
 										<span class="bs-stepper-label mt-1">
 											<span class="bs-stepper-title">Purpose</span>
-											<span class="bs-stepper-subtitle">Saan gagamitin</span>
+										
 										</span>
 
 									</button>
 								</div>
+
 								<div class="line">
 									<i class="bx bx-chevron-right"></i>
 								</div>
-								<div class="step" data-target="#social-links">
-									<button type="button" class="step-trigger">
+								<div class="step" data-target="#datezoom">
+										<button type="button" class="step-trigger" disabled>
 										<span class="bs-stepper-circle">3</span>
 										<span class="bs-stepper-label mt-1">
 											<span class="bs-stepper-title">Select Your Reservation Date</span>
-											<span class="bs-stepper-subtitle">select date and time</span>
+											<span class="bs-stepper-subtitle">Select Date and Time</span>
 										</span>
 									</button>
 								</div>
@@ -251,7 +272,7 @@
 									<div id="personal-info" class="content">
 										<div class="content-header mb-3">
 											<h6 class="mb-0">Account Details</h6>
-											<small>Enter Your Account Details.</small>
+											<small>Enter Your Account Details</small>
 										</div>
 										<div class="row g-3">
 											<div class="col-sm-6">
@@ -261,15 +282,12 @@
 											</div>
 
 
-											@* <div class="col-sm-6">
-											<label class="form-label" for="email">Email</label>
-											<input type="email" id="email" class="form-control" placeholder="john.doe@email.com" aria-label="john.doe" />
-											</div> *@
+										
 
 
 											<div class="col-sm-6">
 												<label class="form-label" for="LName">Last Name</label>
-												<input asp-for="Appointment.LastName" type="text" class="form-control" id="exampleInputPassword1" placeholder="Last Name" aria-label="lname" required>
+												<input asp-for="Appointment.LastName" type="text" class="form-control" id="ln" placeholder="Last Name" aria-label="lname" required>
 												<span asp-validation-for="Appointment.LastName" class="text-danger"></span>
 
 											</div>
@@ -280,9 +298,9 @@
 
 
 
-												<select asp-for="Appointment.Sex" class="form-select" aria-label="Sex" required>
+											<select asp-for="Appointment.Sex" class="form-select" aria-label="Sex" id="sex" required>
 
-													<option disabled selected>Select Sex</option>
+											
 													<option value="Male">Male</option>
 													<option value="Female">Female</option>
 												</select>
@@ -293,17 +311,17 @@
 
 											<div class="col-sm-6">
 												<label class="form-label" for="Department">Department</label>
-												
-											
-												<select asp-for="Appointment.DepartmentId" asp-items="@Model.DepartmentList" class="form-select" required>
-													<option disabled selected>Select Department</option>
+
+
+											<select asp-for="Appointment.DepartmentId" asp-items="@Model.DepartmentList" class="form-select" id="department"  required>
+												<option selected disabled>Select Department</option>
 												</select>
 												<span asp-validation-for="Appointment.DepartmentId" class="text-danger"></span>
 											</div>
 
 											 <div class="col-sm-6">
 												<label class="form-label" for="email">Email</label>
-												<input asp-for="Appointment.Email" type="email" class="form-control" id="emaild" placeholder="userEmail@gmail.com" required>
+												<input asp-for="Appointment.Email" type="email" class="form-control" id="email" placeholder="userEmail@gmail.com" required>
 												<span asp-validation-for="Appointment.Email" class="text-danger"></span>
 
 
@@ -315,7 +333,7 @@
 											 <div class="col-sm-6">
 												<label class="form-label" for="PhoneNumber">Phone Number</label>
 
-												<input asp-for="Appointment.PhoneNum" type="text" class="form-control" id="PhoneNum" placeholder="Phone Number" required>
+											<input asp-for="Appointment.PhoneNum" type="text" class="form-control" id="phone" placeholder="Phone Number" required>
 												<span asp-validation-for="Appointment.PhoneNum" class="text-danger"></span>
 											</div> 
 
@@ -331,7 +349,7 @@
 													<i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
 													<span class="align-middle d-sm-inline-block d-none">Previous</span>
 												</button>
-												<button class="btn btn-primary btn-next">
+											<button class="btn btn-primary btn-next " id="nextButton" disabled>
 													<span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span>
 													<i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
 												</button>
@@ -342,15 +360,15 @@
 									<div id="reason" class="content">
 										<div class="content-header mb-3">
 											<h6 class="mb-0">Purpose</h6>
-											<small>purpose why you want to use ZoomX</small>
+											<small>Purpose why you want to use Zoom </small>
 										</div>
 										<div class="row g-3">
 											
 											<div class="col-sm-12">
-												<label class="form-label" for="reason">Reason</label>
+												<label class="form-label" for="reason">Purpose</label>
 
-										
-												<textarea asp-for="Appointment.reason" class="form-control" placeholder="Reason" id="floatingTextarea" required></textarea>
+
+											<textarea asp-for="Appointment.reason" class="form-control" placeholder="Type Here...." id="purpose" required></textarea>
 												<span asp-validation-for="Appointment.reason" class="text-danger"></span>
 											</div>
 										
@@ -359,24 +377,24 @@
 													<i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
 													<span class="align-middle d-sm-inline-block d-none">Previous</span>
 												</button>
-												<button class="btn btn-primary btn-next">
+											<button class="btn btn-primary btn-next" id="nextButton1" disabled>
 													<span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span>
 													<i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
 												</button>
 											</div>
 										</div>
 									</div>
-									<!-- Social Links -->
-									<div id="social-links" class="content">
+									<!-- datae -->
+									<div id="datezoom" class="content">
 										<div class="content-header mb-3">
-											<h6 class="mb-0">Social Links</h6>
-											<small>Enter Your Social Links.</small>
+											<h6 class="mb-0">Date and Time</h6>
+										<small>Select Date and Time</small>
 										</div>
 										<div class="row g-3">
 											<div class="col-sm-6">
 												<label class="form-label" for="Select Date">Select Date</label>
 												<input type="text" class="form-control" id="selectedDate" name="selectedDate" placeholder="Click here to select Date" required />
-												<span id="valdate" class="text-danger"></span>
+											<span id="valdate" class="text-danger"></span>
 
 											</div>
 
@@ -396,14 +414,14 @@
 
 
 
-
+										<div class="g-recaptcha" data-sitekey="6Lc0XQ4qAAAAACAtm6swcOApaU3ubm19jH1mDpb6" data-callback="enableSubmitBtn"></div>
 											<div class="col-12 d-flex justify-content-between">
 												<button class="btn btn-primary btn-prev">
 													<i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
 													<span class="align-middle d-sm-inline-block d-none">Previous</span>
 												</button>
-												<button id="submitBtn" type="submit" class="btn btn-primary ">Submit</button>
-												
+											<button id="submitBtn" type="submit" disabled="disabled" class="btn btn-primary ">Submit</button>
+											
 											</div>
 										</div>
 									</div>
@@ -415,86 +433,16 @@
 
 				</div>
 
-				@* 
-				<button type="button" class="btn btn-success me-1 mb-1" id="type-success">
-					Success
-				</button>
-
- *@
+		
 
 
-				@* 	<div class="form-group">
-				<label for="floatingInput">First Name</label>
-				<input asp-for="Appointment.FirstName" type="text" class="form-control" id="fn" aria-describedby="firstname" placeholder="" required>
-				<span asp-validation-for="Appointment.FirstName" class="text-danger"></span>
-				</div>
 
-				*@
-				@* <div class="form-group mt-2">
-				<label for="">Last Name</label>
-				<input asp-for="Appointment.LastName" type="text" class="form-control" id="exampleInputPassword1" placeholder="" required>
-				<span asp-validation-for="Appointment.LastName" class="text-danger"></span>
-				</div> *@
+			
 
-				@* <div class="form-group mt-2">
-				<label for="">Sex</label>
-				<select asp-for="Appointment.Sex" class="form-select" aria-label="Sex" required>
-
-				<option disabled selected>Select Sex</option>
-				<option value="Male">Male</option>
-				<option value="Female">Female</option>
-				</select>
-				<span asp-validation-for="Appointment.Sex" class="text-danger"></span>
-				</div> *@
-
-				<div class="form-group mt-2">
-				@* 	<label for="">Reason</label>
-					<textarea asp-for="Appointment.reason" class="form-control" placeholder="Reason" id="floatingTextarea" required></textarea>
-					<span asp-validation-for="Appointment.reason" class="text-danger"></span> *@
-				</div>
-
-				<div class="form-group mt-2">
-				@* 	<label for="">Email</label>
-					<input asp-for="Appointment.Email" type="email" class="form-control" id="emaild" required>
-					<span asp-validation-for="Appointment.Email" class="text-danger"></span> *@
-				</div>
-
-				<div class="form-group mt-2">
-					@* <label for="">Phone Number</label>
-					<input asp-for="Appointment.PhoneNum" type="text" class="form-control" id="PhoneNum" required>
-					<span asp-validation-for="Appointment.PhoneNum" class="text-danger"></span> *@
-				</div>
-
-				<div class="form-group mb-3">
-				@* 	<label for="">Department</label>
-					<select asp-for="Appointment.DepartmentId" asp-items="@Model.DepartmentList" class="form-select" required>
-						<option disabled selected>Select Department</option>
-					</select>
-					<span asp-validation-for="Appointment.DepartmentId" class="text-danger"></span>
-					@*         <span asp-validation-for="Appointment.DepartmentId" class="text-danger"></span> *@ 
-				</div>
-
-				<div class="form-group mb-3">
-
-				@* 	<label for="">Select Date</label>
-					<input type="text" class="form-control" id="selectedDate" name="selectedDate" required />
-					<span id="valdate" class="text-danger"></span> *@
-				</div>
-
-
-			@* 	<div class="form-group mb-3" id="showTime">
-					<label for="">Select Time(s)</label><br />
-					<input type="hidden" id="selectedTimeSlots" name="SelectedTimeSlots" />
-					<select required id="TimeSlots" class="js-select2 form-group" multiple onchange="console.log(Array.from(this.selectedOptions).map(x=>x.value??x.text))" multiselect-hide-x="true"></select>
-					<span id="valtime" class="text-danger"></span>
-				</div>
- *@
-
-			@* 	<button type="submit" class="btn btn-primary">Submit</button> *@
 			</form>
 		</div>
 
-
+		</div>
 	
 	</main>
 	<!-- Footer-->
@@ -506,6 +454,74 @@
 		// Serialize the list of disabled dates to JSON
 		var disabledDatesJson = Newtonsoft.Json.JsonConvert.SerializeObject(disabledDates);
 	}
+
+
+
+
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const nextButton = document.getElementById('nextButton');
+	
+			const inputs = document.querySelectorAll('#fn, #ln, #sex, #department, #email, #phone');
+
+			function checkInputs() {
+				let allFilled = true;
+				inputs.forEach(input => {
+					if (input.value === '') {
+						allFilled = false;
+					}
+				});
+				nextButton.disabled = !allFilled;
+				
+			}
+
+			inputs.forEach(input => {
+				input.addEventListener('input', checkInputs);
+			});
+		});
+
+
+
+
+		document.addEventListener('DOMContentLoaded', function () {
+		
+			const nextButton1 = document.getElementById('nextButton1');
+			const inputss = document.querySelectorAll('#purpose');
+
+			function checkInputs() {
+				let allFilled = true;
+				inputss.forEach(input => {
+					if (input.value === '') {
+						allFilled = false;
+					}
+				});
+				
+				nextButton1.disabled = !allFilled;
+			}
+
+			inputss.forEach(input => {
+				input.addEventListener('input', checkInputs);
+			});
+		});
+
+
+
+	</script>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -592,36 +608,17 @@
 
 
 
-				// function checkCondition() {
+				
 					if (isTextBoxEmpty) {
-
+					
 						return false; // prevent form submission
 					} 
 					
-					
-				// 	else {
-				// 		return true;
-				// 	}
-				// }
+			
 
 
 
-				// document.getElementById('submitBtn').addEventListener('click', function () {
-				// 	// Check the condition
-				// 	if (checkCondition()) {
-				// 		// Disable the button if the condition is true
-				// 		this.disabled = true;
-				// 		// Optionally, you can change the text to show it's disabled
-				// 		this.innerText = 'Submitting...';
-				// 	}
-				// });
 
-
-				
-
-
-
-				// Check for empty date
 
 
 				// Proceed with form submission if all validations pass
@@ -644,42 +641,37 @@
 						if (response.success) {
 							var timesList = '';
 							$.each(response.times, function (index, time) {
-								timesList += '<li class="badge bg-label-success mb-2">' + time + '</li>';
+								timesList += '<li class="badge bg-label-success mb-2 text-white">' + time + '</li>';
 							});
 							// Assuming the response from the server indicates a successful submission
 							Swal.fire({
-								icon: 'success',
+								
 								
 								html: `
-			<div class="p-3">
-			  <div class="text-center mb-2">
-
-				<h3>Appointment Details</h3>
-				
-			  </div>
-			  <div class="modal-body">
-				<div class="row mb-3">
-				 
-				 <div class="col-lg-12 col-sm-12 ">
-					<label class="col-lg-4 col-sm-12 col-form-label d-flex justify-content-start" for="First Name">Full Name</label>
-							<div class="col-12"><input type="text" class="form-control" value="` + response.firstname + ` ` + response.lastname + `" disabled=""></div>
-				  </div>
-
-
-
-				  <div class="col-lg-12 col-sm-12">
-							<label class="col-sm-5 col-form-label  d-flex justify-content-start" for="Transaction ID:">Transaction ID:</label>
-							<div class="col-12"><input type="text" class="form-control" value="` + response.tCode + `" disabled=""></div>
-				  </div>
+									  <div class="p-3" style="font-family: Arial, sans-serif; background-image: url('https://crms.calambacity.gov.ph/img/clean3.jpg'); background-size: cover; background-position: center; padding: 20px; border-radius: 10px;">
+					<div class="text-center mb-2">
+												<h2 class="fw-bold" style="color: #fff;">Appointment Details</h3>
+					</div>
+					<div class="modal-body">
+						<div class="row mb-3">
+							<div class="col-lg-12 col-sm-12">
+								<label class="col-lg-4 col-sm-12 col-form-label d-flex justify-content-start text-white" for="fullName">Full Name</label>
+								<div class="col-12">
+											<label class="text-white fs-4 fw-bold" >${response.firstname} ${response.lastname}</label>
+								</div>
+							</div>
+							<div class="col-lg-12 col-sm-12">
+										<label class="col-sm-5 col-form-label d-flex justify-content-start text-white" for="transactionId">Transaction ID:</label>
+								<div class="col-12">
+													<label class="fs-3 fw-bold" style="color:#c1ffc3f2;">${response.tCode}</label>
+								</div>
+							</div>
+						</div>
+						    <hr>
+								<p class="text-white "><strong>Times Reserved:</strong></p>
+						<ul>${timesList}</ul>
+					</div>
 				</div>
-			
-						<p><strong>Times Reserved:</strong></p>
-
-								<ul>` + timesList + `</ul>
-						
-			  </div>
-			</div>
-		
 		
 		
 		  `,
@@ -691,7 +683,7 @@
 									Swal.fire({
 										icon: 'error',
 										title: 'Error!',
-										text: 'Something went wrong. Please try again.',
+										text: 'Please Fill-up the missing Field.',
 										confirmButtonText: 'OK'
 									});
 								}
@@ -703,7 +695,7 @@
 						Swal.fire({
 							icon: 'error',
 							title: 'Error!',
-							text: 'Something went wrong. Please try again.',
+							text: 'Something went wrong. Please try again..',
 							confirmButtonText: 'OK'
 						});
 					},
@@ -803,10 +795,10 @@
 
 		$(".js-select2").select2({
 			closeOnSelect: false,
-			placeholder: "Select Time",
+			placeholder: " Select Time",
 			allowHtml: true,
 			allowClear: true,
-			tags: true // создает новые опции на лету
+			tags: true 
 		});
 
 		$('.icons_select2').select2({
@@ -815,7 +807,7 @@
 			templateResult: iformat,
 			allowHtml: true,
 			placeholder: "Placeholder",
-			dropdownParent: $('.select-icon'),//обавили класс
+			dropdownParent: $('.select-icon'),
 			allowClear: true,
 			multiple: false
 		});
@@ -825,7 +817,7 @@
 			var originalOption = icon.element;
 			var originalOptionBadge = $(originalOption).data('badge');
 
-			return $('<span><i class="fa ' + $(originalOption).data('icon') + '"></i> ' + icon.text + '<span class="badge">' + originalOptionBadge + '</span></span>');
+			return $('<span><i class="fa ' + $(originalOption).data('icon') + '"></i> ' + icon.text + '<span class="badge bg-label-success">' + originalOptionBadge + '</span></span>');
 		}
 
 	</script>

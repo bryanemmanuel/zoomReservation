@@ -86,12 +86,18 @@ namespace zoomrs.Areas.users.Controllers
                 }),
             };
 
-            var disabledDates = _unitOfWork.DisableDate.GetAll().Select(d => d.date.ToString("yyyy-MM-dd")).ToList();
-            ViewData["DisableDate"] = disabledDates;
+
+			var disabledDates = _unitOfWork.DisableDate.GetAll().Select(d => d.date.ToString("yyyy-MM-dd")).ToList();
+			var scheduleQuery = _unitOfWork.Schedule.GetAll()
+			.GroupBy(s => s.date.ToString("yyyy-MM-dd"))
+			.Select(g => new { Date = g.Key, TotalTime = g.Sum(s => s.time) })
+			.Where(a => a.TotalTime >= 511)
+			.Select(a => a.Date);
+			var allDisabledDates = disabledDates.Union(scheduleQuery).ToList();
+			ViewData["DisableDate"] = allDisabledDates;
 
 
-
-            return View(appointmentVM);
+			return View(appointmentVM);
         }
         public IActionResult test()
         {

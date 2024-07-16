@@ -25,13 +25,13 @@
 		<!-- Navigation-->
 		<nav class="navbar navbar-expand-lg bg-gradient-primary-to-secondary py-2">
 			<div class="container  d-flex justify-content-center">
-				<a class="" href=".//"><img class="profile-img" src="assets/logomin.webp" width="220px" alt="calamba logo" /></a>
+				<a asp-area="Users" asp-controller="Home" asp-action="Index"><img class="profile-img" src="assets/logomin.webp" width="220px" alt="calamba logo" /></a>
 
 
 			</div>
 		</nav>
 		<!-- Header-->
-		<header class="">
+		<header class="calambabg">
 			<div class="container px-5 pb-5">
 				<div class="row gx-5 align-items-center">
 					<div class="col-xxl-7">
@@ -39,8 +39,8 @@
 						<div class="d-flex justify-content-center mt-5 mt-xxl-0">
 							<div class="profile ">
 
-
-								<img class="profile-img" src="assets/zoom.gif" alt="..." />
+								
+								<img class="profile-img" src="~/assets/output-onlinegiftools.gif" alt="..." />
 								<div class="dots-1">
 									<!-- SVG Dots-->
 									<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 191.6 1215.4" style="enable-background: new 0 0 191.6 1215.4" xml:space="preserve">
@@ -168,7 +168,7 @@
 
 								<a class="btn btn-primary btn-lg px-5 py-3 me-sm-3 fs-6 fw-bolder shadow" asp-controller="Appointment">Make Reservation</a>
 								<!-- <a class="btn btn-outline-dark btn-lg px-5 py-3 fs-6 fw-bolder" href=".html"></a> -->
-								<button type="button" class="btn btn-outline-dark btn-lg px-5 py-3 fs-6 fw-bolder shadow" data-bs-toggle="modal" data-bs-target="#modals-transparent">
+								<button type="button" class="btn btn-outline-dark btn-lg bg-white px-5 py-3 fs-6 fw-bolder shadow" data-bs-toggle="modal" data-bs-target="#modals-transparent">
 									Check Schedule
 								</button>
 							</div>
@@ -265,7 +265,7 @@
 				<div class="row gx-5 justify-content-center">
 					<div class="col-xxl-8">
 						<div class="text-center my-5">
-							<h2 class="display-5 fw-bolder"><span class="text-gradient d-inline">About Zoomers</span></h2>
+							<h2 class="display-5 fw-bolder"><span class="text-gradient d-inline">About Zoom Reservation</span></h2>
 							<p class="lead fw-light mb-4">Welcome to the Calamba City Zoomers Reservation System</p>
 							<p class="text-muted"> an innovative platform designed to streamline and facilitate your virtual meetings and appointments with the City Government of Calamba. Our system offers a convenient and efficient way to reserve time slots for various services, ensuring you receive the assistance you need without the hassle of long wait times or in-person visits.</p>
 							<!-- <div class="d-flex justify-content-center fs-2 gap-4">
@@ -283,7 +283,7 @@
 	<footer class="bg-white py-4 mt-auto">
 		<div class="container px-5">
 			<div class="row d-flex align-items-center justify-content-between flex-column flex-sm-row">
-				<div class="col-12 d-flex align-items-center justify-content-center "><div class="small m-0">Copyright &copy;Zoomers 2024</div></div>
+				<div class="col-12 d-flex align-items-center justify-content-center "><div class="small m-0">Copyright &copy;ZoomersX 2024</div></div>
 				<div class="col-auto">
 					<!-- <a class="small" href="#!">Privacy</a>
 					<span class="mx-1">&middot;</span>

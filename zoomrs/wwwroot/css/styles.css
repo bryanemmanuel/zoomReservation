@@ -330,8 +330,19 @@ label {
   display: inline-block;
 }
 
+
+
+
+.calambabg {
+    height:100vh;
+    background-image: url('../assets/clean2.jpg');
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+}
+
 button {
-  border-radius: 0;
+    border-radius: 0;
 }
 
 button:focus:not(:focus-visible) {
